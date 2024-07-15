@@ -31,6 +31,13 @@ def user_creation_view(request: HttpRequest) -> HttpResponse:
             return render(request, "hangar/user_form.html", context=context)
 
 
+def user_profile_view(request: HttpRequest, pk: int) -> HttpResponse:
+    context = {
+        "user": Astronaut.objects.get(id=pk)
+    }
+    return render(request, "hangar/user_details.html", context=context)
+
+
 def racket_list_view(request: HttpRequest) -> HttpResponse:
     queryset = Racket.objects.all()
     context = {
@@ -81,6 +88,13 @@ def astronaut_create_view(request: HttpRequest) -> HttpResponse:
             return redirect(reverse_lazy("hangar:astronaut-list"))
 
 
+def astronaut_details(request: HttpRequest, pk: int) -> HttpResponse:
+    context = {
+        "astronaut": Astronaut.objects.get(id=pk)
+    }
+    return render(request, "hangar/astronaut_details.html", context=context)
+
+
 def flight_list_view(request: HttpRequest) -> HttpResponse:
     queryset = Flight.objects.all()
     context = {
@@ -108,4 +122,3 @@ def flight_details(request: HttpRequest, pk: int) -> HttpResponse:
         "flight": Flight.objects.get(id=pk)
     }
     return render(request, "hangar/flight_details.html", context=context)
-
