@@ -6,7 +6,7 @@ from django.forms import DateInput
 from hangar.models import Astronaut, Racket, Flight
 
 
-class AstronautCreationForm(UserCreationForm):
+class AstronautRegistrationForm(UserCreationForm):
     class Meta:
         model = Astronaut
         fields = UserCreationForm.Meta.fields + (
@@ -20,6 +20,18 @@ class AstronautCreationForm(UserCreationForm):
             'first_name': forms.TextInput(attrs={'class': 'form-control'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control'}),
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
+        }
+
+
+class AstronautCreationForm(UserCreationForm):
+    class Meta:
+        model = Astronaut
+        fields = UserCreationForm.Meta.fields + (
+            "year_of_experience",
+        )
+
+        widgets = {
+            'username': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
 
