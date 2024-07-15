@@ -4,7 +4,7 @@
 <ul>
   {% for racket in racket_list %}
     <li>
-      {{ racket.name }}
+      <a href="{% url 'hangar:racket-details' pk=racket.id %}">{{ racket.name }}</a>
     </li>
   {% endfor %}
 </ul>
