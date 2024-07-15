@@ -4,7 +4,7 @@
 <ul>
   {% for astronaut in astronaut_list %}
     <li>
-      {{ astronaut.username }}
+      <a href="{% url 'hangar:astronaut-details' pk=astronaut.id %}">{{ astronaut.username }}</a>
     </li>
   {% endfor %}
 </ul>
