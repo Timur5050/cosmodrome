@@ -1,4 +1,5 @@
 from django.contrib.auth import login
+from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
@@ -10,7 +11,7 @@ from hangar.forms import (
     FlightForm,
     AstronautCreationForm,
     FlightSearchForm,
-    RacketSearchForm
+    RacketSearchForm, AstronautRegistrationForm
 )
 from hangar.models import Racket, Astronaut, Flight
 
@@ -51,9 +52,15 @@ def racket_list_view(request: HttpRequest) -> HttpResponse:
     search_name = request.GET.get("name")
     if search_name:
         queryset = queryset.filter(name__icontains=search_name)
+
+    paginator = Paginator(queryset, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        "racket_list": queryset,
-        "search_form": RacketSearchForm
+        "racket_list": page_obj,
+        "search_form": RacketSearchForm,
+        "page_obj": page_obj
     }
     return render(request, "hangar/racket_list.html", context=context)
 
@@ -83,9 +90,15 @@ def astronaut_list_view(request: HttpRequest) -> HttpResponse:
     search_username = request.GET.get("username")
     if search_username:
         queryset = queryset.filter(username__icontains=search_username)
+
+    paginator = Paginator(queryset, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        "astronaut_list": queryset,
+        "astronaut_list": page_obj,
         "search_form": AstronautSearchForm,
+        "page_obj": page_obj
     }
     return render(request, "hangar/astronaut_list.html", context=context)
 
@@ -116,9 +129,15 @@ def flight_list_view(request: HttpRequest) -> HttpResponse:
     search_name = request.GET.get("name")
     if search_name:
         queryset = queryset.filter(name__icontains=search_name)
+
+    paginator = Paginator(queryset, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
     context = {
-        "flight_list": queryset,
-        "search_form": FlightSearchForm
+        "flight_list": page_obj,
+        "search_form": FlightSearchForm(),
+        "page_obj": page_obj
     }
     return render(request, "hangar/flight_list.html", context=context)
 
