@@ -3,7 +3,15 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 
-from hangar.forms import UserCreationForm, AstronautRegistrationForm, RacketForm, FlightForm, AstronautCreationForm
+from hangar.forms import (
+    UserCreationForm,
+    AstronautSearchForm,
+    RacketForm,
+    FlightForm,
+    AstronautCreationForm,
+    FlightSearchForm,
+    RacketSearchForm
+)
 from hangar.models import Racket, Astronaut, Flight
 
 
@@ -40,8 +48,12 @@ def user_profile_view(request: HttpRequest, pk: int) -> HttpResponse:
 
 def racket_list_view(request: HttpRequest) -> HttpResponse:
     queryset = Racket.objects.all()
+    search_name = request.GET.get("name")
+    if search_name:
+        queryset = queryset.filter(name__icontains=search_name)
     context = {
-        "racket_list": queryset
+        "racket_list": queryset,
+        "search_form": RacketSearchForm
     }
     return render(request, "hangar/racket_list.html", context=context)
 
@@ -68,8 +80,12 @@ def racket_details(request: HttpRequest, pk: int) -> HttpResponse:
 
 def astronaut_list_view(request: HttpRequest) -> HttpResponse:
     queryset = Astronaut.objects.all()
+    search_username = request.GET.get("username")
+    if search_username:
+        queryset = queryset.filter(username__icontains=search_username)
     context = {
-        "astronaut_list": queryset
+        "astronaut_list": queryset,
+        "search_form": AstronautSearchForm,
     }
     return render(request, "hangar/astronaut_list.html", context=context)
 
@@ -97,8 +113,12 @@ def astronaut_details(request: HttpRequest, pk: int) -> HttpResponse:
 
 def flight_list_view(request: HttpRequest) -> HttpResponse:
     queryset = Flight.objects.all()
+    search_name = request.GET.get("name")
+    if search_name:
+        queryset = queryset.filter(name__icontains=search_name)
     context = {
-        "flight_list": queryset
+        "flight_list": queryset,
+        "search_form": FlightSearchForm
     }
     return render(request, "hangar/flight_list.html", context=context)
 
