@@ -8,6 +8,7 @@ from hangar.views import (
     astronaut_list_view,
     flight_list_view,
     flight_list_create,
+    flight_details,
     astronaut_create_view
 )
 
@@ -20,6 +21,7 @@ urlpatterns = [
     path("astronauts/create/", astronaut_create_view, name="astronaut-create"),
     path("flights/", flight_list_view, name="flight-list"),
     path("flights/create/", flight_list_create, name="flight-create"),
+    path("flights/<int:pk>/details/", flight_details, name="flight-details"),
 ]
 
 app_name = "hangar"
