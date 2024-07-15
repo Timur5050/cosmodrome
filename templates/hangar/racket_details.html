@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ racket.name }}</h1>
+<p>speed : {{ racket.speed }}</p>
+<p>destination: {{ racket.destination }}</p>
+<form action="{% url 'hangar:racket-list' %}" method="get">
+  <input type="submit" value="back">
+</form>
+
+{% endblock %}
