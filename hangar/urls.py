@@ -7,7 +7,8 @@ from hangar.views import (
     racket_list_view,
     astronaut_list_view,
     flight_list_view,
-    flight_list_create
+    flight_list_create,
+    astronaut_create_view
 )
 
 urlpatterns = [
@@ -16,6 +17,7 @@ urlpatterns = [
     path("rackets/", racket_list_view, name="racket-list"),
     path("rackets/create/", racket_create_view, name="racket-create"),
     path("astronauts/", astronaut_list_view, name="astronaut-list"),
+    path("astronauts/create/", astronaut_create_view, name="astronaut-create"),
     path("flights/", flight_list_view, name="flight-list"),
     path("flights/create/", flight_list_create, name="flight-create"),
 ]
