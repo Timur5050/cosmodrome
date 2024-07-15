@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
+<form action="" method="get" class="form-inline mb-3">
+  {{ search_form.as_p }}
+  <input type="submit" value="🔍" class="btn btn-secondary ml-2">
+</form>
 <ul>
   {% for astronaut in astronaut_list %}
     <li>
