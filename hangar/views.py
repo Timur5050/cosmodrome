@@ -94,3 +94,11 @@ def flight_list_create(request: HttpRequest) -> HttpResponse:
         if form.is_valid():
             form.save()
             return redirect(reverse_lazy("hangar:flight-list"))
+
+
+def flight_details(request: HttpRequest, pk: int) -> HttpResponse:
+    context = {
+        "flight": Flight.objects.get(id=pk)
+    }
+    return render(request, "hangar/flight_details.html", context=context)
+
