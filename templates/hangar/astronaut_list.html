@@ -4,8 +4,11 @@
 <ul>
   {% for astronaut in astronaut_list %}
     <li>
-      {{ astronaut.first_name }} {{ astronaut.last_name }}
+      {{ astronaut.username }}
     </li>
   {% endfor %}
 </ul>
+<form action="{% url 'hangar:astronaut-create' %}" method="get">
+  <input type="submit" value="create">
+</form>
 {% endblock %}
