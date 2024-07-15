@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ul>
+  {% for astronaut in astronaut_list %}
+    <li>
+      {{ astronaut.first_name }} {{ astronaut.last_name }}
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}
