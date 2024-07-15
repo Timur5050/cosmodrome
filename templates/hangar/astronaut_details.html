@@ -1,11 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1> {{ astronaut.username }} </h1>
-<p>name: {{ astronaut.first_name }}</p>
-<p>surname: {{ astronaut.last_name }}</p>
-<p>years of experience : {{ astronaut.year_of_experience }}</p>
-<form action="{% url 'hangar:astronaut-list' %}" method="get">
-  <input type="submit" value="back">
-</form>
+<div class="flight-details">
+  <h1 class="flight-name">{{ astronaut.username }}</h1>
+  <div class="flight-info">
+    <p><strong>Name:</strong> {{ astronaut.first_name }}</p>
+    <p><strong>Surname:</strong> {{ astronaut.last_name }}</p>
+    <p><strong>years of experience:</strong> {{ astronaut.year_of_experience }}</p>
+  </div>
+  <form action="{% url 'hangar:astronaut-list' %}" method="get" class="back-form">
+    <input type="submit" value="Back" class="btn btn-primary">
+  </form>
+</div>
 {% endblock %}
