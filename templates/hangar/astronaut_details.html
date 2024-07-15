@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1> {{ astronaut.username }} </h1>
+<p>name: {{ astronaut.first_name }}</p>
+<p>surname: {{ astronaut.last_name }}</p>
+<p>years of experience : {{ astronaut.year_of_experience }}</p>
+<form action="{% url 'hangar:astronaut-list' %}" method="get">
+  <input type="submit" value="back">
+</form>
+{% endblock %}
