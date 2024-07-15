@@ -5,7 +5,7 @@
 <ul>
   {% for flight in flight_list %}
   <li>
-    {{ flight.name }}
+    <a href="{% url 'hangar:flight-details' pk=flight.id %}">{{ flight.name }}</a>
   </li>
   {% endfor %}
 </ul>
