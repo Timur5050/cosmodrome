@@ -52,6 +52,13 @@ def racket_create_view(request: HttpRequest) -> HttpResponse:
             return redirect(reverse_lazy("hangar:racket-list"))
 
 
+def racket_details(request: HttpRequest, pk: int) -> HttpResponse:
+    context = {
+        "racket": Racket.objects.get(id=pk)
+    }
+    return render(request, "hangar/racket_details.html", context=context)
+
+
 def astronaut_list_view(request: HttpRequest) -> HttpResponse:
     queryset = Astronaut.objects.all()
     context = {
