@@ -3,4 +3,4 @@ from django.shortcuts import render
 
 
 def index(request: HttpRequest) -> HttpResponse:
-    return HttpResponse("hello")
+    return render(request, "hangar/index.html")
