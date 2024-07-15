@@ -1,7 +1,9 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
+from django.forms import DateInput
 
-from hangar.models import Astronaut, Racket
+from hangar.models import Astronaut, Racket, Flight
 
 
 class AstronautCreationForm(UserCreationForm):
@@ -24,4 +26,17 @@ class AstronautCreationForm(UserCreationForm):
 class RacketForm(forms.ModelForm):
     class Meta:
         model = Racket
+        fields = "__all__"
+
+
+class FlightForm(forms.ModelForm):
+    astronauts = forms.ModelMultipleChoiceField(
+        queryset=get_user_model().objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+    )
+
+    flight_date = forms.DateField(widget=DateInput(attrs={'type': 'date'}))
+
+    class Meta:
+        model = Flight
         fields = "__all__"
