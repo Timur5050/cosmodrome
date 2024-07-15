@@ -52,3 +52,30 @@ class FlightForm(forms.ModelForm):
     class Meta:
         model = Flight
         fields = "__all__"
+
+
+class FlightSearchForm(forms.Form):
+    name = forms.CharField(
+        required=False,
+        label="",
+        max_length=255,
+        widget=forms.TextInput(attrs={"placeholder": "search by name"}),
+    )
+
+
+class RacketSearchForm(forms.Form):
+    name = forms.CharField(
+        max_length=255,
+        label="",
+        required=False,
+        widget=forms.TextInput(attrs={"placeholder": "search by name"})
+    )
+
+
+class AstronautSearchForm(forms.Form):
+    username = forms.CharField(
+        max_length=255,
+        required=False,
+        label="",
+        widget=forms.TextInput(attrs={"placeholder": "search by username"})
+    )
