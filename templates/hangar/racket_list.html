@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<ul>
+  {% for racket in racket_list %}
+    <li>
+      {{ racket.name }}
+    </li>
+  {% endfor %}
+</ul>
+
+<form action="{% url 'hangar:racket-create' %}" method="GET">
+  <input type="submit" value="create">
+</form>
+
+{% endblock %}
