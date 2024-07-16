@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<header class="hero bg-primary text-white text-center py-5">
+  <div class="container">
+    <h1 class="display-4">Welcome to Cosmodromes Central!</h1>
+    <p class="lead">Your ultimate destination for rockets, flights, astronauts, and more.</p>
+  </div>
+</header>
+
+<div class="container my-5">
+  <div class="row text-center">
+    <div class="col-md-6 col-lg-3 mb-4">
+      <div class="card">
+        <img src="{% static 'images/rockets.jpg' %}" class="card-img-top" alt="Rockets">
+        <div class="card-body">
+          <h5 class="card-title">Rockets</h5>
+          <p class="card-text">Explore the rockets that are paving the way for space exploration.</p>
+          <a href="{% url 'hangar:racket-list' %}" class="btn btn-primary">View Rockets</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-4">
+      <div class="card">
+        <img src="{% static 'images/flights.jpg' %}" class="card-img-top" alt="Flights">
+        <div class="card-body">
+          <h5 class="card-title">Flights</h5>
+          <p class="card-text">Check out the upcoming and past space flights.</p>
+          <a href="{% url 'hangar:flight-list' %}" class="btn btn-primary">View Flights</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-4">
+      <div class="card">
+        <img src="{% static 'images/astronauts.jpg' %}" class="card-img-top" alt="Astronauts">
+        <div class="card-body">
+          <h5 class="card-title">Astronauts</h5>
+          <p class="card-text">Learn more about the brave men and women venturing into space.</p>
+          <a href="{% url 'hangar:astronaut-list' %}" class="btn btn-primary">View Astronauts</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 col-lg-3 mb-4">
+      <div class="card">
+        <img src="{% static 'images/missions.jpg' %}" class="card-img-top" alt="Missions">
+        <div class="card-body">
+          <h5 class="card-title">Missions</h5>
+          <p class="card-text">Discover the missions that are exploring the cosmos.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="bg-dark text-white text-center py-3">
+  <p>&copy; 2024 Cosmodromes Central. All rights reserved.</p>
+</footer>
+{% endblock %}

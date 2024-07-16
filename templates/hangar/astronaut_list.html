@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block content %}
+<style>
+  html, body {
+      height: 100%;
+      margin: 0;
+  }
+
+  .background-image {
+      background-image: url('{% static "images/space1.jpg" %}');
+      background-size: cover; /* Ensures the image covers the whole container */
+      background-position: center; /* Centers the image */
+      background-repeat: no-repeat; /* Prevents the image from repeating */
+      height: 100vh;
+      width: 100vw;
+      position: absolute; /* Makes sure the background image covers the whole viewport */
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+  }
+
+  .container {
+      position: relative; /* Ensures the container sits on top of the background image */
+      z-index: 1; /* Keeps the content above the background image */
+      padding: 1rem; /* Add some padding if needed */
+  }
+</style>
+
+<div class="background-image">
+  <div class="container mt-4">
+    <!-- Search Form -->
+    <form action="" method="get" class="form-inline mb-4 bg-light p-4 rounded shadow-sm">
+      <div class="form-group mb-2">
+        {{ search_form|crispy }}
+      </div>
+      <button type="submit" class="btn btn-primary ml-2">
+        <i class="fas fa-search"></i> Search
+      </button>
+    </form>
+
+    <!-- Astronaut List -->
+    <div class="mb-4">
+      <ul class="list-group">
+        {% for astronaut in astronaut_list %}
+        <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+          <a href="{% url 'hangar:astronaut-details' pk=astronaut.id %}" class="text-decoration-none text-dark">
+            {{ astronaut.username }}
+          </a>
+        </li>
+        {% empty %}
+        <li class="list-group-item text-center">No astronauts found</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <!-- Pagination -->
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page=1{% if search_username %}&username={{ search_username }}{% endif %}" aria-label="First">
+            <span aria-hidden="true">&laquo;&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if search_username %}&username={{ search_username }}{% endif %}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        {% endif %}
+
+        <li class="page-item disabled">
+          <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        </li>
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if search_username %}&username={{ search_username }}{% endif %}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if search_username %}&username={{ search_username }}{% endif %}" aria-label="Last">
+            <span aria-hidden="true">&raquo;&raquo;</span>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+
+    <!-- Create Astronaut Button -->
+    <div class="text-center mt-4">
+      <a href="{% url 'hangar:astronaut-create' %}" class="btn btn-success">
+        <i class="fas fa-plus"></i> Create Astronaut
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

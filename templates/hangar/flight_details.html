@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flight-details">
+  <h1 class="flight-name">{{ flight.name }}</h1>
+  <div class="flight-info">
+    <p><strong>Duration:</strong> {{ flight.duration }}</p>
+    <p><strong>Flight Date:</strong> {{ flight.flight_date }}</p>
+  </div>
+  <form action="{% url 'hangar:flight-list' %}" method="get" class="back-form">
+    <input type="submit" value="Back" class="btn btn-primary">
+  </form>
+</div>
+{% endblock %}
