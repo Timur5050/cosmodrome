@@ -35,11 +35,10 @@ def user_creation_view(request: HttpRequest) -> HttpResponse:
             user = form.save()
             login(request, user)
             return redirect(reverse_lazy("hangar:main-page"))
-        else:
-            context = {
-                "form": form
-            }
-            return render(request, "hangar/user_form.html", context=context)
+        context = {
+            "form": form
+        }
+        return render(request, "hangar/user_form.html", context=context)
 
 
 @login_required
