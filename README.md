@@ -1,22 +1,19 @@
 # cosmodrome
 
 # Introduction
-Welcome to our Django-based application. This project is designed to manage tasks with a streamlined user interface, providing features such as task creation, user management, and pagination. The application aims to simplify the process of task tracking and user management within an organization or personal projects.
+Welcome to our Django-based application. This project, known as the Cosmodrome Project, is designed to manage rockets, astronauts and flights with a streamlined user interface. It provides features such as rocket, astronaut and flight creation, user management, and pagination.
 
 # Key Features
-1) Task Management
-- Create, View, and Edit Tasks: Users can create new tasks, view task details, and edit existing tasks with ease.
-- Pagination: Efficiently browse through tasks using pagination on the task list page for better navigation and performance.
-  
-2) User Management
-- User Creation: Admins can create new users through a dedicated form, simplifying user onboarding.
-- User Information: View and update user details to manage profiles effectively.
+1) Launch Management
+- Create, View, and Edit Launches: Users can schedule new rocket launches, view detailed launch information, and edit existing launch schedules effortlessly.
+- Pagination: Navigate through the list of scheduled launches with pagination for improved performance and ease of use.
 
-3) Tags Management
-- Tag Creation and Management: Add and manage tags associated with tasks, enhancing organization and searchability.
+2) Astronaut Management
+- Astronaut Creation: Admins can onboard new astronauts through a dedicated form, streamlining the process of adding new crew members.
+- Astronaut Information: View and update astronaut profiles to manage their details and mission assignments effectively.
 
-4) Admin Panel
-- Admin Interface: A comprehensive admin panel for managing the application’s data and configurations, providing robust control and oversight.
+3) Rockets Management
+- Tag Creation and Management: Add and manage rockets for flight, improving the organization and searchability of various space missions and operations.
 
 # Installation Instructions
 ```sh
