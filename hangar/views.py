@@ -1,4 +1,5 @@
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render, redirect
@@ -20,6 +21,7 @@ def index(request: HttpRequest) -> HttpResponse:
     return render(request, "hangar/index.html")
 
 
+@login_required
 def user_creation_view(request: HttpRequest) -> HttpResponse:
     if request.method == "GET":
         context = {
@@ -40,6 +42,7 @@ def user_creation_view(request: HttpRequest) -> HttpResponse:
             return render(request, "hangar/user_form.html", context=context)
 
 
+@login_required
 def user_profile_view(request: HttpRequest, pk: int) -> HttpResponse:
     context = {
         "user": Astronaut.objects.get(id=pk)
@@ -47,6 +50,7 @@ def user_profile_view(request: HttpRequest, pk: int) -> HttpResponse:
     return render(request, "hangar/user_details.html", context=context)
 
 
+@login_required
 def racket_list_view(request: HttpRequest) -> HttpResponse:
     queryset = Racket.objects.all()
     search_name = request.GET.get("name")
@@ -65,6 +69,7 @@ def racket_list_view(request: HttpRequest) -> HttpResponse:
     return render(request, "hangar/racket_list.html", context=context)
 
 
+@login_required
 def racket_create_view(request: HttpRequest) -> HttpResponse:
     if request.method == "GET":
         context = {
@@ -78,6 +83,7 @@ def racket_create_view(request: HttpRequest) -> HttpResponse:
             return redirect(reverse_lazy("hangar:racket-list"))
 
 
+@login_required
 def racket_details(request: HttpRequest, pk: int) -> HttpResponse:
     context = {
         "racket": Racket.objects.get(id=pk)
@@ -85,6 +91,7 @@ def racket_details(request: HttpRequest, pk: int) -> HttpResponse:
     return render(request, "hangar/racket_details.html", context=context)
 
 
+@login_required
 def astronaut_list_view(request: HttpRequest) -> HttpResponse:
     queryset = Astronaut.objects.all()
     search_username = request.GET.get("username")
@@ -103,6 +110,7 @@ def astronaut_list_view(request: HttpRequest) -> HttpResponse:
     return render(request, "hangar/astronaut_list.html", context=context)
 
 
+@login_required
 def astronaut_create_view(request: HttpRequest) -> HttpResponse:
     if request.method == "GET":
         context = {
@@ -117,6 +125,7 @@ def astronaut_create_view(request: HttpRequest) -> HttpResponse:
             return redirect(reverse_lazy("hangar:astronaut-list"))
 
 
+@login_required
 def astronaut_details(request: HttpRequest, pk: int) -> HttpResponse:
     context = {
         "astronaut": Astronaut.objects.get(id=pk)
@@ -124,6 +133,7 @@ def astronaut_details(request: HttpRequest, pk: int) -> HttpResponse:
     return render(request, "hangar/astronaut_details.html", context=context)
 
 
+@login_required
 def flight_list_view(request: HttpRequest) -> HttpResponse:
     queryset = Flight.objects.all()
     search_name = request.GET.get("name")
@@ -142,6 +152,7 @@ def flight_list_view(request: HttpRequest) -> HttpResponse:
     return render(request, "hangar/flight_list.html", context=context)
 
 
+@login_required
 def flight_list_create(request: HttpRequest) -> HttpResponse:
     if request.method == "GET":
         context = {
@@ -156,6 +167,7 @@ def flight_list_create(request: HttpRequest) -> HttpResponse:
             return redirect(reverse_lazy("hangar:flight-list"))
 
 
+@login_required
 def flight_details(request: HttpRequest, pk: int) -> HttpResponse:
     context = {
         "flight": Flight.objects.get(id=pk)
