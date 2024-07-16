@@ -1,7 +1,6 @@
 .idea/
 .vscode/
 *.iml
-sample.env
 .DS_Store
 venv/
 .env
