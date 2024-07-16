@@ -19,6 +19,7 @@ Welcome to our Django-based application. This project is designed to manage task
 - Admin Interface: A comprehensive admin panel for managing the application’s data and configurations, providing robust control and oversight.
 
 # Installation Instructions
+```sh
 - git clone https://github.com/Timur5050/cosmodrome.git
 - cd cosmodrome
 - python -m venv env
@@ -27,6 +28,7 @@ Welcome to our Django-based application. This project is designed to manage task
 - python manage.py migrate
 - python manage.py runserver
 - go to http://127.0.0.1:8000/
+```
 
 # Usage Guide
 - Main Page, URL: /, View: index. This is the main landing page of the application.
