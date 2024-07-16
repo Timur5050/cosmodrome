@@ -1,9 +1,10 @@
 .idea/
 .vscode/
 *.iml
-.env
+sample.env
 .DS_Store
 venv/
+.env
 .pytest_cache/
 **__pycache__/
 db.sqlite3
