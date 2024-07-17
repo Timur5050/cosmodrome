@@ -5,9 +5,10 @@ Welcome to our Django-based application. This project, known as the Cosmodrome P
 
 # Site is also already hosted on a free platfom, here is the link:
 [cosmodrome deployed on render](https://cosmodrome.onrender.com)
+
 user credentials for fast login:
-username: testuser
-password: wG9vSUT8
+- username: testuser
+- password: wG9vSUT8
 
 # Key Features
 1) Launch Management
