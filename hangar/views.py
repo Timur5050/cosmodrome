@@ -1,12 +1,13 @@
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.views.generic import FormView, DetailView, ListView, CreateView
 
 from hangar.forms import (
-    UserCreationForm,
     AstronautSearchForm,
     RacketForm,
     FlightForm,
@@ -21,73 +22,53 @@ def index(request: HttpRequest) -> HttpResponse:
     return render(request, "hangar/index.html")
 
 
-@login_required
-def user_creation_view(request: HttpRequest) -> HttpResponse:
-    if request.method == "GET":
-        context = {
-            "form": AstronautRegistrationForm
-        }
-        return render(request, "hangar/user_form.html", context=context)
+class UserCreationView(FormView):
+    template_name = "hangar/user_form.html"
+    form_class = AstronautRegistrationForm
+    success_url = reverse_lazy("hangar:main-page")
 
-    if request.method == "POST":
-        form = AstronautRegistrationForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect(reverse_lazy("hangar:main-page"))
-        context = {
-            "form": form
-        }
-        return render(request, "hangar/user_form.html", context=context)
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return super().form_valid(form)
 
 
-@login_required
-def user_profile_view(request: HttpRequest, pk: int) -> HttpResponse:
-    context = {
-        "user": Astronaut.objects.get(id=pk)
-    }
-    return render(request, "hangar/user_details.html", context=context)
+class UserProfileView(LoginRequiredMixin, DetailView):
+    model = Astronaut
+    template_name = "hangar/user_details.html"
+    context_object_name = "user"
 
 
-@login_required
-def racket_list_view(request: HttpRequest) -> HttpResponse:
-    queryset = Racket.objects.all()
-    search_name = request.GET.get("name")
-    if search_name:
-        queryset = queryset.filter(name__icontains=search_name)
+class RacketListView(LoginRequiredMixin, ListView):
+    model = Racket
+    template_name = "hangar/racket_list.html"
+    context_object_name = "racket_list"
+    paginate_by = 5
 
-    paginator = Paginator(queryset, 5)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_name = self.request.GET.get("name")
+        if search_name:
+            queryset = queryset.filter(name__icontains=search_name)
+        return queryset
 
-    context = {
-        "racket_list": page_obj,
-        "search_form": RacketSearchForm,
-        "page_obj": page_obj
-    }
-    return render(request, "hangar/racket_list.html", context=context)
-
-
-@login_required
-def racket_create_view(request: HttpRequest) -> HttpResponse:
-    if request.method == "GET":
-        context = {
-            "form": RacketForm
-        }
-        return render(request, "hangar/racket_form.html", context=context)
-    if request.method == "POST":
-        form = RacketForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect(reverse_lazy("hangar:racket-list"))
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["search_form"] = RacketSearchForm()
+        return context
 
 
-@login_required
-def racket_details(request: HttpRequest, pk: int) -> HttpResponse:
-    context = {
-        "racket": Racket.objects.get(id=pk)
-    }
-    return render(request, "hangar/racket_details.html", context=context)
+class RacketCreateView(LoginRequiredMixin, CreateView):
+    model = Racket
+    form_class = RacketForm
+    template_name = "hangar/racket_form.html"
+    success_url = reverse_lazy("hangar:racket-list")
+
+
+class RacketDetailView(LoginRequiredMixin, DetailView):
+    model = Racket
+    context_object_name = "racket"
+    template_name = "hangar/racket_details.html"
 
 
 @login_required
@@ -109,27 +90,17 @@ def astronaut_list_view(request: HttpRequest) -> HttpResponse:
     return render(request, "hangar/astronaut_list.html", context=context)
 
 
-@login_required
-def astronaut_create_view(request: HttpRequest) -> HttpResponse:
-    if request.method == "GET":
-        context = {
-            "form": AstronautCreationForm
-        }
-        return render(request, "hangar/astronaut_form.html", context=context)
-
-    if request.method == "POST":
-        form = AstronautCreationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect(reverse_lazy("hangar:astronaut-list"))
+class AstronautCreateView(LoginRequiredMixin, CreateView):
+    model = Astronaut
+    form_class = AstronautCreationForm
+    success_url = reverse_lazy("hangar:astronaut-list")
+    template_name = "hangar/astronaut_form.html"
 
 
-@login_required
-def astronaut_details(request: HttpRequest, pk: int) -> HttpResponse:
-    context = {
-        "astronaut": Astronaut.objects.get(id=pk)
-    }
-    return render(request, "hangar/astronaut_details.html", context=context)
+class AstronautDetailView(LoginRequiredMixin, DetailView):
+    model = Astronaut
+    context_object_name = "astronaut"
+    template_name = "hangar/astronaut_details.html"
 
 
 @login_required
@@ -151,24 +122,14 @@ def flight_list_view(request: HttpRequest) -> HttpResponse:
     return render(request, "hangar/flight_list.html", context=context)
 
 
-@login_required
-def flight_list_create(request: HttpRequest) -> HttpResponse:
-    if request.method == "GET":
-        context = {
-            "form": FlightForm
-        }
-        return render(request, "hangar/flight_form.html", context=context)
-
-    if request.method == "POST":
-        form = FlightForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect(reverse_lazy("hangar:flight-list"))
+class FlightCreateView(LoginRequiredMixin, CreateView):
+    model = Flight
+    form_class = FlightForm
+    template_name = "hangar/flight_form.html"
+    success_url = reverse_lazy("hangar:flight-list")
 
 
-@login_required
-def flight_details(request: HttpRequest, pk: int) -> HttpResponse:
-    context = {
-        "flight": Flight.objects.get(id=pk)
-    }
-    return render(request, "hangar/flight_details.html", context=context)
+class FlightDetailView(LoginRequiredMixin, DetailView):
+    model = Flight
+    context_object_name = "flight"
+    template_name = "hangar/flight_details.html"
