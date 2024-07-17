@@ -3,6 +3,9 @@
 # Introduction
 Welcome to our Django-based application. This project, known as the Cosmodrome Project, is designed to manage rockets, astronauts and flights with a streamlined user interface. It provides features such as rocket, astronaut and flight creation, user management, and pagination.
 
+# Site is also already hosted on a free platfom, here is the link:
+[cosmodrome deployed on render](https://cosmodrome.onrender.com)
+
 # Key Features
 1) Launch Management
 - Create, View, and Edit Launches: Users can schedule new rocket launches, view detailed launch information, and edit existing launch schedules effortlessly.
